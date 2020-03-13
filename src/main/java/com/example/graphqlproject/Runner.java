@@ -38,8 +38,8 @@ public class Runner implements CommandLineRunner {
                 .stream(arcadeGameRepository.findAll().spliterator(), false)
                 .collect(Collectors.toList());
 
-        animalRepository.save(new Animal("0", 0, "Snake"));
-        animalRepository.save(new Animal("1", 4, "Cat"));
+        animalRepository.save(new Animal( 0, "Snake"));
+        animalRepository.save(new Animal( 4, "Cat"));
 
         GraphQLDataFetchers.animalList = StreamSupport
                 .stream(animalRepository.findAll().spliterator(), false)

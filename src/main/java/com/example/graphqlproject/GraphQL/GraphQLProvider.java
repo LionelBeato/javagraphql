@@ -27,6 +27,8 @@ public class GraphQLProvider {
 
     private GraphQL graphQL;
 
+    // this method points to your schema and wires everything up
+    // so that your schema works
     @PostConstruct
     public void init() throws Exception {
         URL url = Resources.getResource("schema.graphqls");
@@ -36,6 +38,7 @@ public class GraphQLProvider {
     }
 
     private GraphQLSchema buildSchema(String sdl) throws Exception {
+        // this looks through your schema and helps register your types
         TypeDefinitionRegistry typeRegistry = new SchemaParser().parse(sdl);
         RuntimeWiring runtimeWiring = buildWiring();
         SchemaGenerator schemaGenerator = new SchemaGenerator();

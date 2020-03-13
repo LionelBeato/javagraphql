@@ -1,31 +1,30 @@
 package com.example.graphqlproject.Model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Objects;
 
 @Entity
 public class Animal {
     @Id
-    private String id;
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    private Long id;
     private int amountOfLegs;
     private String name;
 
-    public Animal(String id, int amountOfLegs, String name) {
-        this.id = id;
+    public Animal(int amountOfLegs, String name) {
         this.amountOfLegs = amountOfLegs;
         this.name = name;
     }
 
     public Animal(){};
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public int getAmountOfLegs() {
         return amountOfLegs;
