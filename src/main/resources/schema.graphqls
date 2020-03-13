@@ -9,13 +9,13 @@ type Query {
 # This is a graphQL comment!
 # Cool, huh?
 type Animal {
-    id: ID!
+    id: ID
     name: String
     amountOfLegs: Int
 }
 
 type ArcadeGame {
-    id: ID!
+    id: ID
     name: String
     amountOfPlayers: String
 

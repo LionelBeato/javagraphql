@@ -60,7 +60,9 @@ public class GraphQLDataFetchers {
 
 
     public DataFetcher getBookByIdDataFetcher() {
-        // DataFetchingEnvironment is an anonymous inner class
+        // DataFetchingEnvironment is like an anonymous inner class
+        // it's technically a functional interface: this is more succint...
+        // ...specifically calls the get method inside of the interface
         return dataFetchingEnvironment -> {
             String bookId = dataFetchingEnvironment.getArgument("id");
             return books
@@ -89,7 +91,7 @@ public class GraphQLDataFetchers {
             String arcadeGameId = dataFetchingEnvironment.getArgument("id");
             return arcadeGameList
                     .stream()
-                    .filter(game -> game.getId().equals(arcadeGameId))
+                    .filter(game -> game.getId().toString().equals(arcadeGameId))
                     .findFirst()
                     .orElse(null);
 
@@ -105,18 +107,19 @@ public class GraphQLDataFetchers {
         };
     }
 
-    public DataFetcher getAnimalsFetcher(){
+    public DataFetcher<List<Animal>> getAnimalsFetcher(){
+        // TODO: get a working match for this query
         return dataFetchingEnvironment -> {
             return animalList;
         };
     }
 
-    public DataFetcher getAnimalByIdFetcher(){
+    public DataFetcher<Animal> getAnimalByIdFetcher(){
         return dataFetchingEnvironment -> {
             String animalId = dataFetchingEnvironment.getArgument("id");
             return animalList
                     .stream()
-                    .filter(animal -> animal.getId().equals(animalId))
+                    .filter(animal -> animal.getId().toString().equals(animalId))
                     .findFirst()
                     .orElse(null);
         };

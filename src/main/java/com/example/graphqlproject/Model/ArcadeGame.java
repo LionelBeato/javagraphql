@@ -1,27 +1,26 @@
 package com.example.graphqlproject.Model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Objects;
 
 @Entity
 public class ArcadeGame {
     @Id
-    private String id;
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    private Long id;
+    // I need to use a type of Long (wrapper class) for my ID
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     private String name;
-    private String amountOfPlayers;
+    private int amountOfPlayers;
 
-    public ArcadeGame(String id, String name, String amountOfPlayers) {
-        this.id = id;
+    public ArcadeGame(String name, int amountOfPlayers) {
         this.name = name;
         this.amountOfPlayers = amountOfPlayers;
     }
@@ -36,11 +35,11 @@ public class ArcadeGame {
         this.name = name;
     }
 
-    public String getAmountOfPlayers() {
+    public int getAmountOfPlayers() {
         return amountOfPlayers;
     }
 
-    public void setAmountOfPlayers(String amountOfPlayers) {
+    public void setAmountOfPlayers(int amountOfPlayers) {
         this.amountOfPlayers = amountOfPlayers;
     }
 
