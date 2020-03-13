@@ -2,6 +2,7 @@ package com.example.graphqlproject.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.Objects;
 
 @Entity
 public class ArcadeGame {
@@ -53,4 +54,21 @@ public class ArcadeGame {
                 ", amountOfPlayers=" + amountOfPlayers +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ArcadeGame that = (ArcadeGame) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(amountOfPlayers, that.amountOfPlayers);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, amountOfPlayers);
+    }
+
+
 }

@@ -1,6 +1,8 @@
 package com.example.graphqlproject.GraphQL;
 
+import com.example.graphqlproject.Model.Animal;
 import com.example.graphqlproject.Model.ArcadeGame;
+import com.example.graphqlproject.Repository.AnimalRepository;
 import com.example.graphqlproject.Repository.ArcadeGameRepository;
 import com.google.common.collect.ImmutableMap;
 import graphql.schema.DataFetcher;
@@ -19,6 +21,9 @@ public class GraphQLDataFetchers {
 
     @Autowired
     ArcadeGameRepository arcadeGameRepository;
+
+    @Autowired
+    AnimalRepository animalRepository;
 
 
     private static List<Map<String, String>> books = Arrays.asList(
@@ -50,6 +55,7 @@ public class GraphQLDataFetchers {
 
 
     public static List<ArcadeGame> arcadeGameList;
+    public static List<Animal> animalList;
 
 
 
@@ -94,12 +100,29 @@ public class GraphQLDataFetchers {
     public DataFetcher getArcadeGamesFetcher(){
         return dataFetchingEnvironment -> {
             // TODO: get a working match for this query
-            String match = dataFetchingEnvironment.getArgument("match");
+           //  String match = dataFetchingEnvironment.getArgument("match");
             return arcadeGameList;
-
-
         };
     }
+
+    public DataFetcher getAnimalsFetcher(){
+        return dataFetchingEnvironment -> {
+            return animalList;
+        };
+    }
+
+    public DataFetcher getAnimalByIdFetcher(){
+        return dataFetchingEnvironment -> {
+            String animalId = dataFetchingEnvironment.getArgument("id");
+            return animalList
+                    .stream()
+                    .filter(animal -> animal.getId().equals(animalId))
+                    .findFirst()
+                    .orElse(null);
+        };
+    }
+
+    // TODO: Add mutation method for my entities
 }
 
 
