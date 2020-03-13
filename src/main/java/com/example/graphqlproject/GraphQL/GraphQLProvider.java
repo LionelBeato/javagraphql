@@ -1,4 +1,4 @@
-package com.example.graphqlproject;
+package com.example.graphqlproject.GraphQL;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
@@ -13,11 +13,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.io.IOException;
 import java.net.URL;
 
 import static graphql.schema.idl.TypeRuntimeWiring.newTypeWiring;
 
+// this component can be thought of as a controller
+// it takes care of the "routing" of the graphql
 @Component
 public class GraphQLProvider {
 
@@ -27,26 +28,33 @@ public class GraphQLProvider {
     private GraphQL graphQL;
 
     @PostConstruct
-    public void init() throws IOException {
+    public void init() throws Exception {
         URL url = Resources.getResource("schema.graphqls");
         String sdl = Resources.toString(url, Charsets.UTF_8);
         GraphQLSchema graphQLSchema = buildSchema(sdl);
         this.graphQL = GraphQL.newGraphQL(graphQLSchema).build();
     }
 
-    private GraphQLSchema buildSchema(String sdl) {
+    private GraphQLSchema buildSchema(String sdl) throws Exception {
         TypeDefinitionRegistry typeRegistry = new SchemaParser().parse(sdl);
         RuntimeWiring runtimeWiring = buildWiring();
         SchemaGenerator schemaGenerator = new SchemaGenerator();
         return schemaGenerator.makeExecutableSchema(typeRegistry, runtimeWiring);
     }
 
-    private RuntimeWiring buildWiring() {
+    private RuntimeWiring buildWiring() throws Exception {
         return RuntimeWiring.newRuntimeWiring()
                 .type(newTypeWiring("Query")
                         .dataFetcher("bookById", graphQLDataFetchers.getBookByIdDataFetcher()))
                 .type(newTypeWiring("Book")
                         .dataFetcher("author", graphQLDataFetchers.getAuthorDataFetcher()))
+                .type(newTypeWiring("Query")
+                        .dataFetcher("arcadeGameById", graphQLDataFetchers.getArcadeGameByIdDataFetcher()))
+               .type(newTypeWiring("Query")
+                       .dataFetcher("arcadeGames", graphQLDataFetchers.getArcadeGamesFetcher()))
+                .type(newTypeWiring("Query")
+                        .dataFetcher("authors", graphQLDataFetchers.getAuthorDataFetcher()))
+
                 .build();
     }
 

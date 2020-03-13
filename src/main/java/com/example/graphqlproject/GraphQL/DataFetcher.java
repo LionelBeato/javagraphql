@@ -1,4 +1,4 @@
-package com.example.graphqlproject;
+package com.example.graphqlproject.GraphQL;
 
 import graphql.schema.DataFetchingEnvironment;
 

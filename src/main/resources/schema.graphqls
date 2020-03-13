@@ -1,7 +1,16 @@
 type Query {
     bookById(id: ID): Book
+    arcadeGameById(id: ID): ArcadeGame
+    arcadeGames(match : String):[ArcadeGame!]!
+}
+
+type ArcadeGame {
+    id: ID!
+    name: String
+    amountOfPlayers: String
 
 }
+
 
 type Book {
     id: ID
@@ -9,6 +18,7 @@ type Book {
     pageCount: Int
     author: Author
 }
+
 
 type Author {
     id: ID

@@ -1,15 +1,25 @@
-package com.example.graphqlproject;
+package com.example.graphqlproject.GraphQL;
 
+import com.example.graphqlproject.Model.ArcadeGame;
+import com.example.graphqlproject.Repository.ArcadeGameRepository;
 import com.google.common.collect.ImmutableMap;
 import graphql.schema.DataFetcher;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+// This component acts as a way to fetch and access our data
+// You can call this component your service
+// its taking care of all of your business logic
 @Component
 public class GraphQLDataFetchers {
+
+    @Autowired
+    ArcadeGameRepository arcadeGameRepository;
+
 
     private static List<Map<String, String>> books = Arrays.asList(
             ImmutableMap.of("id", "book-1",
@@ -38,7 +48,13 @@ public class GraphQLDataFetchers {
                     "lastName", "Rice")
     );
 
+
+    public static List<ArcadeGame> arcadeGameList;
+
+
+
     public DataFetcher getBookByIdDataFetcher() {
+        // DataFetchingEnvironment is an anonymous inner class
         return dataFetchingEnvironment -> {
             String bookId = dataFetchingEnvironment.getArgument("id");
             return books
@@ -51,7 +67,7 @@ public class GraphQLDataFetchers {
 
     public DataFetcher getAuthorDataFetcher() {
         return dataFetchingEnvironment -> {
-            Map<String,String> book = dataFetchingEnvironment.getSource();
+            Map<String, String> book = dataFetchingEnvironment.getSource();
             String authorId = book.get("authorId");
             return authors
                     .stream()
@@ -61,4 +77,29 @@ public class GraphQLDataFetchers {
         };
     }
 
+
+    public DataFetcher getArcadeGameByIdDataFetcher() {
+        return dataFetchingEnvironment -> {
+            String arcadeGameId = dataFetchingEnvironment.getArgument("id");
+            return arcadeGameList
+                    .stream()
+                    .filter(game -> game.getId().equals(arcadeGameId))
+                    .findFirst()
+                    .orElse(null);
+
+        };
+    }
+
+
+    public DataFetcher getArcadeGamesFetcher(){
+        return dataFetchingEnvironment -> {
+            // TODO: get a working match for this query
+            String match = dataFetchingEnvironment.getArgument("match");
+            return arcadeGameList;
+
+
+        };
+    }
 }
+
+
