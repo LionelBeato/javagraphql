@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 // This component acts as a way to fetch and access our data
 // You can call this component your service
@@ -104,6 +106,24 @@ public class GraphQLDataFetchers {
             // TODO: get a working match for this query
            //  String match = dataFetchingEnvironment.getArgument("match");
             return arcadeGameList;
+        };
+    }
+
+    public DataFetcher createArcadeGame(){
+        return dataFetchingEnvironment -> {
+            String name = dataFetchingEnvironment.getArgument("name");
+            int amountOfPlayers = dataFetchingEnvironment.getArgument("amountOfPlayers");
+            ArcadeGame newArcadeGame = new ArcadeGame(name, amountOfPlayers);
+            arcadeGameRepository.save(newArcadeGame);
+
+            // this is code from our runner that converts the repository into a list
+            // it needs to be initiated whenever we mutate a value
+            // otherwise, the repo wont update
+            arcadeGameList =  StreamSupport
+                    .stream(arcadeGameRepository.findAll().spliterator(), false)
+                    .collect(Collectors.toList());
+
+            return newArcadeGame;
         };
     }
 

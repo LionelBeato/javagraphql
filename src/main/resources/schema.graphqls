@@ -6,6 +6,10 @@ type Query {
     animals(match : String):[Animal!]! # The exclamation basically means that the value cannot be null
 }
 
+type Mutation {
+    createArcadeGame(name:String, amountOfPlayers:Int):ArcadeGame!
+}
+
 # This is a graphQL comment!
 # Cool, huh?
 type Animal {
@@ -15,7 +19,7 @@ type Animal {
 }
 
 type ArcadeGame {
-    id: ID
+    id: ID!
     name: String
     amountOfPlayers: String
 
