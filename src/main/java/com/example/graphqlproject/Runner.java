@@ -31,6 +31,8 @@ public class Runner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
+        // this code will always run and thus constantly update our lists
+        // our lists are crucial for our GraphQL apis
         while (true) {
 //        arcadeGameRepository.save(new ArcadeGame( "Pac-Man", 1));
 //        arcadeGameRepository.save(new ArcadeGame("Ms. Pac-Man", 1));
