@@ -47,7 +47,6 @@ public class Runner implements CommandLineRunner {
 //        animalRepository.save(new Animal( 4, "Cat"));
 //        animalRepository.save(testAnimal);
 
-
             GraphQLDataFetchers.animalList = StreamSupport
                     .stream(animalRepository.findAll().spliterator(), false)
                     .collect(Collectors.toList());

@@ -62,7 +62,7 @@ public class GraphQLProvider {
                 .type(newTypeWiring("Query")
                         .dataFetcher("animalById", graphQLDataFetchers.getAnimalByIdFetcher()))
                 .type(newTypeWiring("Mutation")
-                .dataFetcher("createArcadeGame", graphQLDataFetchers.createArcadeGame()))
+                        .dataFetcher("createArcadeGame", graphQLDataFetchers.createArcadeGame()))
                 .build();
     }
 
